@@ -14,5 +14,5 @@ bastion_IP = 178.154.253.113
 someinternalhost_IP = 10.128.0.17
 
 #Подключение к reddit-app
-testapp_IP = 178.154.201.215
+testapp_IP = 178.154.230.31
 testapp_port = 9292
