@@ -12,3 +12,7 @@ ssh -i ~/.ssh/appuser -A appuser@178.154.253.113 "ssh 10.128.0.17"
 # Подключение к bastion и someinternalhost
 bastion_IP = 178.154.253.113
 someinternalhost_IP = 10.128.0.17
+
+#Подключение к reddit-app
+testapp_IP = 178.154.253.66
+testapp_port = 9292

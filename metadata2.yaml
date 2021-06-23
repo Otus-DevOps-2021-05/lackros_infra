@@ -1,0 +1,28 @@
+#cloud-config
+
+package_update: true
+package_upgrade: true
+
+users:
+  - default
+  - name: appuser
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCo+2u6kEzztL+yh8kinf1q9P+1GgKXbUck9jYlApVN6NY8YhJm4MO/bfq1V6BYHUBU92q0FyalxTYePj/6BuO28KlE6zNvlaaVrZCTYArVpLr3tJqeExX4t+LuKdYjiICJVzo64u6b3SAY6zjmbt/zsp1/8j7EDKUEF5cSxaCpeJO9WY2SkGcKJ4amzsdsv5Pnwa1yrhdYprdIXFCPLMkNThk/9TgV4m8ljQD/Cl9iwmI5SpQjdlfip5CMd8B6QmTXv2bvOD8GGNkKQg9dT86BJbIeMkWeUcfZhgb9Dyg1qHqx6++w4hAN5mZs5/8bc3faY4ml57gl0sAD1CyZ3bAQKTRvgqV5Os+Iz5zMuGvgnxhxLxpJlLfR3+pSbs9sqYIHumGVivXTHoGWSkUbSbfsjdDdSsYYLScOHlBOubQdfTDBGnWrhuUF/7SvbeTbj9jtCYTYOGcCikms3PuJaK8eUYVBBbrWsWRGkEEFi2SqU0oHQIT5I5GsG9RliTan/hU= appuser'
+
+runcmd:
+  - [apt, upgrade]
+  - [apt, update]
+  - [apt-get, install, gnupg]
+  - wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
+  - echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+  - [apt-get, update]
+  - [apt-get, install, -y, mongodb-org]
+  - [apt, install, -y, git, ruby-full, ruby-bundler, build-essential]
+  - [git, clone, -b, monolith, "https://github.com/express42/reddit.git"]
+  - [cd, reddit]
+  - [bundle, install]
+  - [systemctl, start, mongod]
+  - [systemctl, enable, mongod]
+  - [puma, -d]
