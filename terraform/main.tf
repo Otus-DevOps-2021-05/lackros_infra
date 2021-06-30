@@ -7,10 +7,10 @@ terraform {
 }
 
 provider "yandex" {
-  token     = "AQAAAAAAWhRvAATuwYqfh6m7i07Aub7wBgP3GNY"
-  cloud_id  = "b1ghpqpcdlol198mj2n0"
-  folder_id = "b1gffujpu97febul0gbo"
-  zone      = "ru-central1-a"
+  service_account_key_file = var.service_account_key_file
+  cloud_id                 = var.cloud_id
+  folder_id                = var.folder_id
+  zone                     = var.zone
 }
 
 resource "yandex_compute_instance" "app" {
@@ -18,25 +18,42 @@ resource "yandex_compute_instance" "app" {
 
   resources {
     core_fraction = 5
-    cores  = 2
-    memory = 2
+    cores         = 2
+    memory        = 2
   }
 
   boot_disk {
     initialize_params {
       # Указать id образа созданного в предыдущем домашем задании
-      image_id = "fd8pkq1j96fe8i1eb78s"
+      image_id = var.image_id
     }
   }
 
   network_interface {
     # Указан id подсети default-ru-central1-a
-    subnet_id = "e9bkojutcebsssrgsgf6"
+    subnet_id = var.subnet_id
     nat       = true
   }
 
-    metadata = {
-    ssh-keys = "ubuntu:${file("~/.ssh/appuser.pub")}"
+  metadata = {
+    ssh-keys = "ubuntu:${file(var.public_key_path)}"
   }
 
+  connection {
+    type  = "ssh"
+    host  = yandex_compute_instance.app.network_interface.0.nat_ip_address
+    user  = "ubuntu"
+    agent = false
+    # путь до приватного ключа
+    private_key = file(var.private_key_path)
+  }
+
+  provisioner "file" {
+    source      = "files/puma.service"
+    destination = "/tmp/puma.service"
+  }
+
+  provisioner "remote-exec" {
+    script = "files/deploy.sh"
+  }
 }
