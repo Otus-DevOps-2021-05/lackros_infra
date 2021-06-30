@@ -22,6 +22,6 @@ variable "subnet_id" {
 variable "service_account_key_file" {
   description = "key .json"
 }
-varible "private_key_path" {
+variable "private_key_path" {
   description = "Path to the PRIVATE key used for ssh access for connetions"
 }
