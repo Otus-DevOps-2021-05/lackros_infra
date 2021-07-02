@@ -12,7 +12,7 @@
             "image_name": "reddit-base-{{timestamp}}",
             "image_family": "reddit-base",
             "ssh_username": "ubuntu",
-            "platform_id": "standard-v1"
+			"platform_id": "standard-v1"
         }
     ],
     "provisioners": [
