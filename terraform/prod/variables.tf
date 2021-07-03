@@ -7,7 +7,7 @@ variable "folder_id" {
 variable "zone" {
   description = "Zone"
   # Значение по умолчанию
-  default = "ru-central1-a"
+  default = "ru-central1-b"
 }
 variable "public_key_path" {
   # Описание переменной
@@ -24,4 +24,27 @@ variable "service_account_key_file" {
 }
 variable "private_key_path" {
   description = "Path to the PRIVATE key used for ssh access for connetions"
+}
+variable app_disk_image {
+  description = "Disk image for reddit app"
+  default = "reddit-app-base"
+}
+variable db_disk_image {
+  description = "Disk image for reddit db"
+  default = "reddit-db-base"
+}
+variable name_inst_app {
+  description = "Name of instance App"
+}
+variable name_inst_db {
+  description = "Name of instance DB"
+}
+variable core_fr {
+  description = "Core_fraction for instance"
+}
+variable namber_of_cores {
+  description = "Namber of cores"
+}
+variable memory_size {
+  description = "Memory_size"
 }
