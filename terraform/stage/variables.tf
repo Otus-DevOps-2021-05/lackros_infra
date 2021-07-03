@@ -25,26 +25,26 @@ variable "service_account_key_file" {
 variable "private_key_path" {
   description = "Path to the PRIVATE key used for ssh access for connetions"
 }
-variable app_disk_image {
+variable "app_disk_image" {
   description = "Disk image for reddit app"
-  default = "reddit-app-base"
+  default     = "reddit-app-base"
 }
-variable db_disk_image {
+variable "db_disk_image" {
   description = "Disk image for reddit db"
-  default = "reddit-db-base"
+  default     = "reddit-db-base"
 }
-variable name_inst_app {
+variable "name_inst_app" {
   description = "Name of instance App"
 }
-variable name_inst_db {
+variable "name_inst_db" {
   description = "Name of instance DB"
 }
-variable core_fr {
+variable "core_fr" {
   description = "Core_fraction for instance"
 }
-variable namber_of_cores {
+variable "namber_of_cores" {
   description = "Namber of cores"
 }
-variable memory_size {
+variable "memory_size" {
   description = "Memory_size"
 }
